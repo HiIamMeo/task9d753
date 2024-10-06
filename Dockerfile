@@ -12,3 +12,5 @@ RUN npm install --production
 COPY --from=build /usr/src/app ./
 EXPOSE 3000
 CMD ["npm", "run", "start:prod"]
+
+#Trigger Jenkins to run
