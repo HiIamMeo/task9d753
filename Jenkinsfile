@@ -83,19 +83,11 @@ pipeline {
                     def kickoff = "docker run -d -p 7777:3000 --platform linux/amd64 --rm --name task9d753 ${registry}:${env.BUILD_NUMBER}"
                     def test1 = "pwd"
                     def test2 = "docker version"
-                    sshagent(['3.27.169.6']) { //TODO: change all ip
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.27.169.6 ${docker_stop}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.27.169.6 ${docker_clean}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.27.169.6 ${kickoff}"
+                    sshagent(['3.24.232.174']) { //TODO: change all ip
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.24.232.174 ${docker_stop}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.24.232.174 ${docker_clean}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.24.232.174 ${kickoff}"
                     }
-                }
-            }
-        }
-
-        stage('Monitoring and Alerting') {
-            steps {
-                script {
-                    echo 'Monitoring and Alerting'
                 }
             }
         }
