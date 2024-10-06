@@ -7,7 +7,7 @@ pipeline {
     }
     
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerHub') //TODO: change registry
+        DOCKERHUB_CREDENTIALS = credentials('dockerHub')
         registry = "879381259188.dkr.ecr.ap-southeast-2.amazonaws.com/daniel/task9d753"
     }
 
@@ -43,7 +43,7 @@ pipeline {
                     sh "docker rm task9d753 || true"
 
                     // Run a new container with your app
-                    sh "docker run -d --name task9d753 -p 3030:3000 ${registry}:${env.BUILD_NUMBER}"
+                    sh "docker run -d --name task9d753 --platform linux/amd64 -p 7777:3000 ${registry}:${env.BUILD_NUMBER}"
                 }
             }
         }
@@ -80,7 +80,7 @@ pipeline {
                 script {
                     def docker_stop = "docker stop task9d753 || true"
                     def docker_clean = "docker rm task9d753 || true"
-                    def kickoff = "docker run -d -p 3030:3000 --platform linux/amd64 --rm --name task9d753 ${registry}:${env.BUILD_NUMBER}"
+                    def kickoff = "docker run -d -p 7777:3000 --platform linux/amd64 --rm --name task9d753 ${registry}:${env.BUILD_NUMBER}"
                     def test1 = "pwd"
                     def test2 = "docker version"
                     sshagent(['3.27.169.6']) { //TODO: change all ip
