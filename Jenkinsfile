@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Analysis') {
             steps {
                 script {
                     def scannerHome = tool 'default-sonar-scanner'
