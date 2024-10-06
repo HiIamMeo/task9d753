@@ -63,7 +63,7 @@ pipeline {
             }
         }
 
-        stage("Release") {
+        stage("Pre-Release") {
             steps {
                 script {
                     // sh "docker login -u AWS -p $(aws ecr get-login-password --region ap-southeast-2) 879381259188.dkr.ecr.ap-southeast-2.amazonaws.com"
@@ -75,7 +75,7 @@ pipeline {
             }
         }
         
-        stage('Run') {
+        stage('Release') {
             steps {
                 script {
                     def docker_stop = "docker stop task9d753 || true"
@@ -83,7 +83,7 @@ pipeline {
                     def kickoff = "docker run -d -p 7777:3000 --platform linux/amd64 --rm --name task9d753 ${registry}:${env.BUILD_NUMBER}"
                     def test1 = "pwd"
                     def test2 = "docker version"
-                    sshagent(['3.24.232.174']) { //TODO: change all ip
+                    sshagent(['3.24.232.174']) {
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.24.232.174 ${docker_stop}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.24.232.174 ${docker_clean}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.24.232.174 ${kickoff}"
